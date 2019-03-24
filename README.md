@@ -1,3 +1,3 @@
 # fetch-api
 Just clone the repo.
-run the headlines.html in the browser.
+run the index.html in the browser.
