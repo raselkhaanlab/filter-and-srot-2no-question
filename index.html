@@ -1,0 +1,187 @@
+<html>
+	<head>
+		<title>
+			Top news
+		</title>
+		<style>
+			#main-field{
+				width:83%;
+				margin:0 auto;
+				
+			}
+			.title{
+				 text-align:center;
+				  padding:5px;
+				  font-size:30px;
+				
+				  color:#999999;
+				 
+			}
+			.title:hover{
+				color:green;
+				 			}
+			.img-right{
+				max-width:70%;
+				padding:10px;
+				float:right;
+				margin-bottom:80px;
+				
+			}
+			.img-left{
+				max-width:70%;
+				padding:10px;
+				margin-bottom:80px;
+				float:left;
+				
+			}
+			.author{
+				text-align:center;
+				border-bottom:1px solid orange;
+
+			}
+			.desc{
+				width:100%;
+			    vertical-align:middle;
+				padding:5px;
+							}
+	 		 .clear{
+	 		 	clear:both;
+	 		 }
+	 		 h1{
+	 		 	margin:0;
+	 		 	text-align:center;
+	 		 	font-weight:1100;
+	 		 	font-size:70px;
+	 		 
+
+
+	 		 }
+	 		 h1:hover{
+	 		 	color:orange;
+	 		 	
+	 		 }
+	 		 a{
+	 		 	background:green;
+	 		 	display:inline-block;
+	 		 	border-radius:5px;
+
+	 		 	padding:5px;
+	 		 	margin:2px ;
+	 		 	color:white;
+	 		 	text-decoration:none;
+	 		 }
+	 		 a:hover{
+	 		 	color:black;
+	 		 	background:orange;
+	 		 	text-decoration:underline;
+
+
+	 		 }
+
+		</style>
+		<!-- 
+<div id='main-field'>
+			div.
+			<h1> Top 10 news</h1>
+			
+			
+
+		</div>
+		 -->
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	</head>
+	<body>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="card">
+					<div class="card-header bg-primary text-light">
+						<h1 class="text-uppercase"> Top 10 news headlines -<b>Filter</b>(author can not be null and source id can not be null sort on asending order</h1>
+					</div>
+					<div class="card-body">
+						<div class="card-text">
+							<div id='main-field'>
+							</div>
+							<div class="card-footer">
+								<p class="text-justify text-center"> @Md Rasel Khaan</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+    <script src="jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+	<script>
+		 $(document).ready(
+		 	function(){
+
+		 		
+
+		var url='https://newsapi.org/v2/top-headlines?country=us&apiKey=f0e4df1d8c164550b04841a98e4c2f4d';
+		fetch(url).
+		then((resp)=>resp.json()).
+		then(function(data){
+		
+			 var field=document.getElementById('main');
+			
+			  var headlines= data.articles;
+			  //filter for author not null
+			 	headlines= headlines.filter(function(headline){
+			 				if(headline.author !=null){
+			 							//source.id not be null
+			 					 return headline.source.id !=null;
+			 				}
+			  });
+
+			 headlines= headlines.sort();
+			 console.log(headlines);
+
+			  for(i=0;i<headlines.length;i++){
+
+
+			  		if(i==10){
+			  			break;
+			  		}
+                    
+                    var title=headlines[i].title;
+                    var author=headlines[i].author;
+                    var desc=headlines[i].description;
+                    var imgUrl=headlines[i].urlToImage;
+                 
+                    var url=headlines[i].url;
+                    if(i%2==0){
+                    	var cls='img-left';
+
+                    }
+                    else{
+                    	var cls='img-right'
+                    }
+                    var img= "<img src='"+imgUrl+"' class="+cls+">";
+
+                    $('#main-field').append('<h3 class="title  text-uppercase align-text-top text-dark">'+"<span class='text-danger'>Heading-"+(i+1)+ "</span>"+" :"+title+'</h3>');
+                    $('#main-field').append('<p class="author">'+"Author:"+author+'</p>');
+                     $("#main-field").append(img);
+                    $('#main-field').append('<p class="desc">'+desc+'</p>').append('(published: '+headlines[i].publishedAt+')').append("<a href='"+url+"' target='_blank'>Read more</a>");
+                    $('#main-field').append("<div class='clear'><div>");
+                    
+                  
+                    
+
+			  }
+			 
+		}).catch(function(err){
+			console.log(err);
+		});
+
+		 
+
+
+
+		 	}
+		 	);
+	</script>
+</html>
